@@ -3,10 +3,11 @@ const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { sequelize, User } = require("./db");
+require("dotenv").config();
 
 const app = express();
 const port = 3000;
-const SECRET_KEY = "yfihdtuhfyfuy";
+const SECRET_KEY = process.env.SECRET_KEY;
 
 app.use(bodyParser.json());
 
