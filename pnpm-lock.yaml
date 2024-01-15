@@ -11,6 +11,9 @@ dependencies:
   body-parser:
     specifier: ^1.20.2
     version: 1.20.2
+  dotenv:
+    specifier: ^16.3.1
+    version: 16.3.1
   express:
     specifier: ^4.18.2
     version: 4.18.2
@@ -23,11 +26,6 @@ dependencies:
   sequelize:
     specifier: ^6.33.0
     version: 6.33.0(mysql2@3.6.2)
-
-devDependencies:
-  dotenv:
-    specifier: ^16.3.1
-    version: 16.3.1
 
 packages:
 
@@ -279,7 +277,7 @@ packages:
   /dotenv@16.3.1:
     resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==}
     engines: {node: '>=12'}
-    dev: true
+    dev: false
 
   /dottie@2.0.6:
     resolution: {integrity: sha512-iGCHkfUc5kFekGiqhe8B/mdaurD+lakO9txNnTvKtA6PISrw86LgqHvRzWYPyoE2Ph5aMIrCw9/uko6XHTKCwA==}
