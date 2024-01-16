@@ -2,15 +2,12 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const morgan = require("morgan");
 const Joi = require("joi");
 const { User } = require("../db");
 const SECRET_KEY = process.env.SECRET_KEY;
 const { sendError } = require("../lib/errors");
+const logger = require("../lib/winston").logger;
 
-router.use(morgan("dev"));
-
-router.use(express.json());
 router.use((req, res, next) => {
   const schema = Joi.object({
     username: Joi.string().alphanum().min(3).max(12).required(),
@@ -28,14 +25,14 @@ router.use((req, res, next) => {
 });
 
 router.post("/", async (req, res) => {
-  console.log("Received request:", JSON.stringify(req.body, null, 2));
+  logger.info("Received request:", JSON.stringify(req.body, null, 2));
   const { username, password } = req.body;
   try {
     const user = await User.findOne({ where: { username } });
     handleLoginAttemp(user, password, res);
   } catch (error) {
     // Sending a successful login response with the user's username and token
-    console.error("Error finding user:", error);
+    logger.error("Error finding user:", error);
     // Sending an error response
     sendError(res, 500, "Internal server error");
   }
