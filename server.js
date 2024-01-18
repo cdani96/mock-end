@@ -1,3 +1,4 @@
+const treblle = require("@treblle/express");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -11,6 +12,7 @@ const { sendError } = require("./lib/errors");
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(treblle());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

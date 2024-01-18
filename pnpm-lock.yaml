@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@treblle/express':
+    specifier: ^0.0.7
+    version: 0.0.7
   bcrypt:
     specifier: ^5.1.1
     version: 5.1.1
@@ -91,6 +94,22 @@ packages:
 
   /@sideway/pinpoint@2.0.0:
     resolution: {integrity: sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==}
+    dev: false
+
+  /@treblle/express@0.0.7:
+    resolution: {integrity: sha512-zl+rLyjCbvDVxCVxfdbAnAuTP1/bsfMHbCZ/tSNibW85OUhSuP5nCDq5S66oTkuMjgQOlMGE54VykmzsOxx9jw==}
+    dependencies:
+      '@treblle/utils': 0.1.14
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
+  /@treblle/utils@0.1.14:
+    resolution: {integrity: sha512-uKVs0Q2lDuCymqYC9ZVqyuauChz3Y8mia50XMYg8svn8bTnQxg9WkaMTKYBIB70KG6JHz6rZePkAitc1QPbXgg==}
+    dependencies:
+      node-fetch: 2.7.0
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@types/debug@4.1.10:
