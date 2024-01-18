@@ -19,6 +19,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(bodyParser.json());
 
+app.use("/ping", (req, res) => {
+  res.status(200).json("Ok");
+});
+
 // Register endpoint
 app.use("/api/register", registerRoute);
 
