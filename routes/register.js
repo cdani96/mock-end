@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const { User } = require("../db");
 const SECRET_KEY = process.env.SECRET_KEY;
-const logger = require("../lib/winston").logger;
 
 const asyncHandler = (fn) => (req, res, next) =>
   Promise.resolve(fn(req, res, next)).catch(next);
@@ -53,7 +52,7 @@ router.post("/", async (req, res) => {
     const token = jwt.sign({ userId: user.id }, SECRET_KEY);
     res.status(200).json({ user: user.username, token });
   } catch (error) {
-    logger.error(error);
+    console.error(error);
   }
 });
 
