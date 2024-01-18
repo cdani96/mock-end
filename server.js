@@ -2,12 +2,14 @@ const treblle = require("@treblle/express");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const compression = require("compression");
 const { sequelize } = require("./db");
 const registerRoute = require("./routes/register");
 const loginRoute = require("./routes/login");
 require("dotenv").config();
 const logger = require("./lib/winston").logger;
 const { sendError } = require("./lib/errors");
+const { limiter } = require("./middlewares/rateLimiter");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -15,7 +17,8 @@ const port = process.env.PORT || 3000;
 app.use(treblle());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+app.use(compression());
+app.use(limiter);
 app.use(cors());
 app.use(bodyParser.json());
 
