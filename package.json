@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --verbose --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
@@ -21,7 +21,14 @@
     "express-rate-limit": "^7.1.5",
     "joi": "^17.11.0",
     "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
     "mysql2": "^3.6.2",
+    "nodemailer": "^6.9.8",
+    "pug": "^3.0.2",
     "sequelize": "^6.33.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3"
   }
 }

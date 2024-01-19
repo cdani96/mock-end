@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+  </head>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 300px;
+    }
+    form > div {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 10px;
+    }
+    form > div > label {
+      margin-bottom: 5px;
+    }
+    form > div > input {
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    form > button {
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #eee;
+      cursor: pointer;
+    }
+    form > button:hover {
+      background-color: #ddd;
+    }
+    form > a {
+      margin-top: 10px;
+    }
+  </style>
+  <body>
+    <h1>Login</h1>
+    <form action="/api/login">
+      <div>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" placeholder="email" />
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="password"
+        />
+      </div>
+      <a href="/register.html">Don't have an account?</a>
+      <button type="submit">Login</button>
+    </form>
+    <div class="errors-container"></div>
+    <script>
+      const form = document.querySelector("form");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const email = formData.get("email");
+        const password = formData.get("password");
+        const body = { email, password };
+        try {
+          const res = await fetch("/api/login", {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {
+              "content-type": "application/json",
+            },
+          });
+          if (!res.ok) {
+            throw res;
+          }
+          const {
+            token,
+            user: { id },
+          } = await res.json();
+          // storage access_token in localStorage:
+          localStorage.setItem("token", token);
+          localStorage.setItem("BEARER_TOKEN_ID", id);
+          window.location.href = "/dashboard.html";
+        } catch (err) {
+          if (err.status >= 400 && err.status < 600) {
+            const errorJSON = await err.json();
+            const errorsContainer = document.querySelector(".errors-container");
+            let errorsHtml = [
+              `
+      <div class="alert alert-danger">
+          Something went wrong. Please try again.
+      </div>
+        `,
+            ];
+            const { errors } = errorJSON;
+            if (errors && Array.isArray(errors)) {
+              errorsHtml = errors.map(
+                (message) => `
+        <div class="alert alert-danger">
+            ${message}
+        </div>
+      `,
+              );
+            }
+            errorsContainer.innerHTML = errorsHtml.join("");
+          } else {
+            alert(
+              "Something went wrong. Please check your internet connection and try again!",
+            );
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

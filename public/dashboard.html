@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple dashboard</title>
+  </head>
+  <body>
+    <h1>Dashboard</h1>
+    <p>Welcome to the dashboard</p>
+    <a onclick="logOut()">Logout</a>
+    <p style="display: none">Loging out in <span class="time"></span></p>
+    <script>
+      const token = localStorage.getItem("token");
+      if (!token) {
+        window.location.href = "/login.html";
+      }
+
+      const logOut = () => {
+        localStorage.removeItem("token");
+        document.querySelector("p").style.display = "block";
+        let time = 5;
+        const timer = setInterval(() => {
+          time--;
+          document.querySelector(".time").innerText = time;
+          if (time === 0) {
+            clearInterval(timer);
+          }
+        }, 1000);
+        setTimeout(() => {
+          window.location.href = "/login.html";
+        }, 5000);
+      };
+    </script>
+  </body>
+</html>

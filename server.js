@@ -6,6 +6,8 @@ const compression = require("compression");
 const { sequelize } = require("./db");
 const registerRoute = require("./routes/register");
 const loginRoute = require("./routes/login");
+const verifyRoute = require("./routes/verify");
+const deleteAccRoute = require("./routes/delete-acc");
 require("dotenv").config();
 const { sendError } = require("./lib/errors");
 const { limiter } = require("./lib/rateLimiter");
@@ -21,6 +23,21 @@ app.use(limiter);
 app.use(cors());
 app.use(bodyParser.json());
 
+// Serve static files
+app.use(express.static("public"));
+
+// Set headers
+app.use("/api", (req, res, next) => {
+  res.setHeader("Content-Type", "application/json");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+  );
+  next();
+});
+
 app.use("/ping", (req, res) => {
   res.status(200).json("Ok");
 });
@@ -30,6 +47,12 @@ app.use("/api/register", registerRoute);
 
 // Login endpoint
 app.use("/api/login", loginRoute);
+
+// Verify endpoint
+app.use("/api/verify", verifyRoute);
+
+// Delete account endpoint
+app.use("/users", deleteAccRoute);
 
 app.post("/api/logger", (req, res) => {
   const errorData = req.body;
